@@ -3,10 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>03544c84-4508-45dd-adc5-77ab6924e267</ProjectGuid>
+    <ProjectGuid>d42eeb15-6530-40be-ae7d-fa0b1c8e2088</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>hopkins.tech.server</DockerServiceName>
+    <DockerServiceName>hopkinstech</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

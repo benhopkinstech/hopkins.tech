@@ -2,10 +2,11 @@ version: '3.4'
 
 services:
   hopkins.tech.server:
+    image: hopkinstech
     container_name: ${DOCKER_REGISTRY-}hopkinstech
     build:
       context: .
       dockerfile: Server/Dockerfile
     working_dir: /app
     ports: 
-        - "3000:443"
+      - "3000:443"
