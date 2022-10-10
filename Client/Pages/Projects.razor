@@ -1,18 +1,56 @@
 ﻿@page "/projects"
+@using hopkins.tech.Shared
+@inject HttpClient Http
 
 <PageTitle>Ben Hopkins - Projects</PageTitle>
 
 <div class="container-fluid content">
     <h1>Projects</h1>
-
+    <p>Here is a list of projects from my GitHub</p>
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Stars</th>
+                <th>Link</th>
             </tr>
         </thead>
         <tbody>
+            @if (projects == null)
+            {
+                <tr>
+                    <td><p><em>Loading...</em></p></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var project in projects)
+                {
+                    <tr>
+                        <td class="text-wrap">@project.Name</td>
+                        <td class="text-wrap">@project.Description</td>
+                        <td>@project.Stars</td>
+                        <td>
+                            <a href="@project.Link" target="_blank">
+                                <span class="iconify" data-icon="cil:external-link" data-width="20"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
+
+@code {
+    private List<Project>? projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await Http.GetFromJsonAsync<List<Project>>("api/project");
+    }
+}
