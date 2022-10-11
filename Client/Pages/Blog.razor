@@ -1,7 +1,33 @@
 ﻿@page "/blog"
+@using hopkins.tech.Shared
+@inject HttpClient Http
 
 <PageTitle>Ben Hopkins - Blog</PageTitle>
 
 <div class="container-fluid content">
     <h1>Blog</h1>
+    <hr />
+    @if (blogs == null)
+    {
+       <p><em>Loading...</em></p>
+    }
+    else
+    {
+        @foreach (var blog in blogs)
+        {
+            <div>@blog.Posted.ToShortDateString()</div>
+            <div><a href="blog/@blog.Url"><h2>@blog.Title</h2></a></div>
+            <div>@blog.Summary</div>
+            <hr />
+        }
+    }
 </div>
+
+@code {
+    private List<BlogData>? blogs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        blogs = await Http.GetFromJsonAsync<List<BlogData>>("api/blog");
+    }
+}
