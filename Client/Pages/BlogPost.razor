@@ -26,6 +26,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        blog = await Http.GetFromJsonAsync<BlogData>($"api/blog/{url}");
+        try
+        {
+            blog = await Http.GetFromJsonAsync<BlogData>($"api/blog/{url}");
+        }
+        catch
+        {
+            Navigation.NavigateTo("/blog");
+        }
     }
 }

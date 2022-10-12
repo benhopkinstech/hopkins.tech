@@ -1,4 +1,5 @@
-﻿using hopkins.tech.Shared;
+﻿using hopkins.tech.Server.Data;
+using hopkins.tech.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace hopkins.tech.Server.Controllers
@@ -7,16 +8,22 @@ namespace hopkins.tech.Server.Controllers
     [Route("api/[controller]")]
     public class BlogController : ControllerBase
     {
+        private readonly HopkinsTechContext _context;
+        public BlogController(HopkinsTechContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         public IEnumerable<BlogData> GetBlogPosts()
         {
-            return new BlogData[] { new BlogData { Url = "test-title", Posted = DateTime.Now, Title = "Test Title", Summary = "This is a short summary for my test" } };
+            return _context.Blogs;
         }
 
         [HttpGet, Route("{url}")]
-        public BlogData GetBlogPostByUrl(string url)
+        public BlogData? GetBlogPostByUrl(string url)
         {
-            return new BlogData { Url = url, Posted = DateTime.Now, Title = "Test", Post = "<h1>Test</h1><h2>Testing</h2>This is the content of the blog post" };
+            return _context.Blogs.Where(b => b.Url == url).FirstOrDefault();
         }
     }
 }
