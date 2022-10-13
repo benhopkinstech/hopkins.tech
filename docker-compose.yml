@@ -9,12 +9,14 @@ services:
       dockerfile: Server/Dockerfile
     working_dir: /app
     ports: 
-      - "3000:443"
+      - 3000:443
 
   db:
     container_name: hopkinstech-database
     image: mcr.microsoft.com/mssql/server:2022-latest
     env_file:
       - Server/database.env
+    volumes:
+      - ./dbdata:/var/opt/mssql/data
     ports:
-      - "1234:1234"
+      - 1234:1234
