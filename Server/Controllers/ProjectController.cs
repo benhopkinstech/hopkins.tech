@@ -10,9 +10,9 @@ namespace hopkins.tech.Server.Controllers
     {
         [HttpGet]
         [ResponseCache(Duration = 120)]
-        public async Task<IEnumerable<Project>> GetProjects()
+        public async Task<IEnumerable<ProjectData>> GetProjects()
         {
-            IEnumerable<Project>? projects = Array.Empty<Project>();
+            IEnumerable<ProjectData>? projects = Array.Empty<ProjectData>();
 
             using (var client = new HttpClient())
             {
@@ -25,12 +25,12 @@ namespace hopkins.tech.Server.Controllers
                 {
                     using (var responseStream = await result.Content.ReadAsStreamAsync())
                     {
-                        projects = await JsonSerializer.DeserializeAsync<IEnumerable<Project>>(responseStream);
+                        projects = await JsonSerializer.DeserializeAsync<IEnumerable<ProjectData>>(responseStream);
                     }
                 }
             }
 
-            return projects ?? Array.Empty<Project>();
+            return projects ?? Array.Empty<ProjectData>();
         }
     }
 }

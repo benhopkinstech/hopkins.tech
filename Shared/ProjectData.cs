@@ -2,7 +2,7 @@
 
 namespace hopkins.tech.Shared
 {
-    public class Project
+    public class ProjectData
     {
         [JsonPropertyName("name")]
         public string? Name { get; set; }
