@@ -19,4 +19,4 @@ services:
     volumes:
       - ./dbdata:/var/opt/mssql/data
     ports:
-      - 1234:1234
+      - 1433:1433
