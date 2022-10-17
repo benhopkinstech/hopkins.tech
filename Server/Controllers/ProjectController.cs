@@ -9,6 +9,7 @@ namespace hopkins.tech.Server.Controllers
     public class ProjectController : ControllerBase
     {
         [HttpGet]
+        [ResponseCache(Duration = 120)]
         public async Task<IEnumerable<Project>> GetProjects()
         {
             IEnumerable<Project>? projects = Array.Empty<Project>();
