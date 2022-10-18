@@ -67,4 +67,8 @@ a, .btn-link {
     .content {
         padding-top: 20px;
     }
+
+    #blazor-error-ui {
+        padding-left: 175px;
+    }
 }
