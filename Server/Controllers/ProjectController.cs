@@ -6,10 +6,10 @@ namespace hopkins.tech.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ResponseCache(Duration = 120)]
     public class ProjectController : ControllerBase
     {
         [HttpGet]
-        [ResponseCache(Duration = 120)]
         public async Task<IEnumerable<ProjectData>> GetProjects()
         {
             IEnumerable<ProjectData>? projects = Array.Empty<ProjectData>();

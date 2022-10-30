@@ -9,10 +9,16 @@ namespace hopkins.tech.Server.Data
         {
         }
 
+        public DbSet<IndexData> Index { get; set; } = default!;
+        public DbSet<SocialIcon> SocialIcons { get; set; } = default!;
+        public DbSet<AboutData> About { get; set; } = default!;
         public DbSet<BlogData> Blogs { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IndexData>().ToTable("Index");
+            modelBuilder.Entity<SocialIcon>().ToTable("SocialIcons");
+            modelBuilder.Entity<AboutData>().ToTable("About");
             modelBuilder.Entity<BlogData>().ToTable("Blogs");
         }
     }

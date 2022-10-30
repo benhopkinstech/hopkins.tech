@@ -1,8 +1,29 @@
 ﻿@page "/about"
+@using hopkins.tech.Shared
+@inject HttpClient Http
 
 <PageTitle>Ben Hopkins - About</PageTitle>
 
 <div class="container-fluid content">
     <h1>About</h1>
     <hr />
+    @if (content == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div>@content.Summary</div>
+        <div>@content.Education</div>
+        <div>@content.Experience</div>
+    }
 </div>
+
+@code {
+    private AboutData? content;
+
+    protected override async Task OnInitializedAsync()
+    {
+        content = await Http.GetFromJsonAsync<AboutData>("api/about");
+    }
+}

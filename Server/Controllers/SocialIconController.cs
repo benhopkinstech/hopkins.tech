@@ -7,24 +7,18 @@ namespace hopkins.tech.Server.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [ResponseCache(Duration = 120)]
-    public class BlogController : ControllerBase
+    public class SocialIconController : ControllerBase
     {
         private readonly HopkinsTechContext _context;
-        public BlogController(HopkinsTechContext context)
+        public SocialIconController(HopkinsTechContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public IEnumerable<BlogData> GetBlogPosts()
+        public IEnumerable<SocialIcon> GetSocialIcons()
         {
-            return _context.Blogs;
-        }
-
-        [HttpGet, Route("{url}")]
-        public BlogData? GetBlogPostByUrl(string url)
-        {
-            return _context.Blogs.Where(b => b.Url == url).FirstOrDefault();
+            return _context.SocialIcons;
         }
     }
 }
