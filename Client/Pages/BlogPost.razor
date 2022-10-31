@@ -15,7 +15,9 @@
         <h1>@blog.Title</h1>
         <div>@blog.Posted.ToLongDateString()</div>
         <hr />
-        @((MarkupString)(blog.Post ?? ""))
+        <div class="col-md-12 col-lg-10 col-xl-8">
+            @((MarkupString)(blog.Post ?? ""))
+        </div>
     }
 </div>
 

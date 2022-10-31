@@ -5,8 +5,6 @@
 <PageTitle>Ben Hopkins - Blog</PageTitle>
 
 <div class="container-fluid content">
-    <h1>Blog</h1>
-    <hr />
     @if (blogs == null)
     {
        <p><em>Loading...</em></p>
@@ -29,5 +27,6 @@
     protected override async Task OnInitializedAsync()
     {
         blogs = await Http.GetFromJsonAsync<List<BlogData>>("api/blog");
+        blogs = blogs.OrderByDescending(x => x.Posted).ToList();
     }
 }

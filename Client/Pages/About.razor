@@ -4,18 +4,17 @@
 
 <PageTitle>Ben Hopkins - About</PageTitle>
 
-<div class="container-fluid content">
-    <h1>About</h1>
-    <hr />
+<div class="container-fluid content d-flex flex-column justify-content-center vh-100">
     @if (content == null)
     {
         <p><em>Loading...</em></p>
     }
     else
     {
-        <div>@content.Summary</div>
-        <div>@content.Education</div>
-        <div>@content.Experience</div>
+        <div class="col-md-12 col-lg-10 col-xl-8">
+            @((MarkupString)(content.About ?? ""))
+            <br />
+        </div>
     }
 </div>
 
