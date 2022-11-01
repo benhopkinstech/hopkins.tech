@@ -11,7 +11,7 @@
     }
     else
     {
-        @foreach (var blog in blogs)
+        @foreach (var blog in blogs.OrderByDescending(x => x.Posted).ToList())
         {
             <div>@blog.Posted.ToShortDateString()</div>
             <div><a href="blog/@blog.Url"><h2>@blog.Title</h2></a></div>
@@ -27,6 +27,5 @@
     protected override async Task OnInitializedAsync()
     {
         blogs = await Http.GetFromJsonAsync<List<BlogData>>("api/blog");
-        blogs = blogs.OrderByDescending(x => x.Posted).ToList();
     }
 }
