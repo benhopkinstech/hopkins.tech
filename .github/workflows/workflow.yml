@@ -1,4 +1,4 @@
-name: Continuous deployment
+name: Continuous Deployment
 
 on:
   push:
@@ -12,13 +12,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: '${{env.DOTNET_ROOT}}/Server/appsettings.json'
+          files: Server/appsettings.json
         env:
           ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
 
-      - name: Start containers
-        run: docker-compose up -d
+      - name: Start Containers
+        run: MSSQL_SA_PASSWORD=${{ secrets.DatabasePassword }} docker-compose up -d
