@@ -21,4 +21,6 @@ jobs:
           ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
 
       - name: Start Containers
-        run: MSSQL_SA_PASSWORD=${{ secrets.DatabasePassword }} docker-compose up -d
+        env:
+          dbpwd: ${{ secrets.DatabasePassword }}
+        run: MSSQL_SA_PASSWORD=$dbpwd docker-compose up -d

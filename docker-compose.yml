@@ -17,8 +17,6 @@ services:
     user: root
     env_file:
       - Server/database.env
-    environment:
-      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
       - ./dbdata:/var/opt/mssql/data
     ports:
