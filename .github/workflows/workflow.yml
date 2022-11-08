@@ -23,4 +23,4 @@ jobs:
       - name: Start Containers
         env:
           dbpwd: ${{ secrets.DatabasePassword }}
-        run: MSSQL_SA_PASSWORD=$dbpwd docker-compose up -d
+        run: MSSQL_SA_PASSWORD="$dbpwd" docker-compose up -d
