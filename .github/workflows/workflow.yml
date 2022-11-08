@@ -13,12 +13,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: App Settings Variable Substitution
+      - name: appsettings.json Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
           files: Server/appsettings.json
         env:
           ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
 
+      - name: database.env Variable Substitution
+        run: sed -i 's/P4ssW0rd!/${{ secrets.DatabasePassword }}/g' Server/database.env
+
       - name: Start Containers
-        run: MSSQL_SA_PASSWORD="${{ secrets.DatabasePassword }}" docker-compose up -d
+        run: docker-compose up -d
