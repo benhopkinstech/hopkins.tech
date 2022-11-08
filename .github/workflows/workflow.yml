@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deployment:
+  Deployment:
     runs-on: self-hosted
 
     steps:
@@ -21,4 +21,4 @@ jobs:
           ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
 
       - name: Start Containers
-        run: MSSQL_SA_PASSWORD=${{ secrets.DatabasePassword }} docker-compose up -d
+        run: MSSQL_SA_PASSWORD=$${{ secrets.DatabasePassword }} docker-compose up -d
