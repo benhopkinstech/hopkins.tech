@@ -33,19 +33,5 @@ namespace hopkins.tech.Server.Controllers
 
             return null;
         }
-
-        [HttpPost]
-        public IActionResult PostBlogData()
-        {
-            // Check url is unique
-
-            return StatusCode(501);
-        }
-
-        [HttpPut]
-        public IActionResult PutBlogData()
-        {
-            return StatusCode(501);
-        }
     }
 }

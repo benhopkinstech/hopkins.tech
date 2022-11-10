@@ -20,11 +20,5 @@ namespace hopkins.tech.Server.Controllers
         {
             return _context.SocialIcons;
         }
-
-        [HttpPut]
-        public IActionResult PutSocialIcons()
-        {
-            return StatusCode(501);
-        }
     }
 }

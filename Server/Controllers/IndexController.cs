@@ -20,11 +20,5 @@ namespace hopkins.tech.Server.Controllers
         {
             return _context.Index.FirstOrDefault();
         }
-
-        [HttpPut]
-        public IActionResult PutIndexData()
-        {
-            return StatusCode(501);
-        }
     }
 }
