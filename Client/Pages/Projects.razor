@@ -45,10 +45,10 @@
 </div>
 
 @code {
-    private List<ProjectData>? projects;
+    private List<Project>? projects;
 
     protected override async Task OnInitializedAsync()
     {
-        projects = await Http.GetFromJsonAsync<List<ProjectData>>("api/project");
+        projects = await Http.GetFromJsonAsync<List<Project>>("api/project");
     }
 }

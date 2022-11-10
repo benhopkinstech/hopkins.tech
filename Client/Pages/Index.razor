@@ -4,45 +4,37 @@
 
 <PageTitle>Ben Hopkins</PageTitle>
 
-@if (content == null || icons == null)
-{
-    <div class="container-fluid content">
-        <p><em>Loading...</em></p>
-    </div>
-}
-else
-{
-    <div class="d-flex flex-column justify-content-center align-items-center vh-100">
-        <div class="display-4">@content.Title</div>
-        <h2>@content.Tagline</h2>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <div class="d-flex flex-row flex-wrap">
-            @foreach (var icon in icons.Take(4))
-            {
-                <a href="@icon.Link" target="_blank">
-                    <div class="p-2"><span class="iconify" data-icon="@icon.Icon" style="color: @icon.Colour;" data-width="@icon.Width" data-height="@icon.Height"></span> </div>
-                </a>
-            }
-            </div>
-            <div class="d-flex flex-row flex-wrap">
-            @foreach (var icon in icons.Skip(4).Take(4))
-            {
-                <a href="@icon.Link" target="_blank">
-                    <div class="p-2"><span class="iconify" data-icon="@icon.Icon" style="color: @icon.Colour;" data-width="@icon.Width" data-height="@icon.Height"></span> </div>
-                </a>
-            }
-            </div>
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="display-4">Software Engineer</div>
+    <h2>with a love for all things tech</h2>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="d-flex flex-row flex-wrap">
+            <a href="https://github.com/benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:github-icon" data-width="40" data-height="40"></span> </div>
+            </a>
+            <a href="https://stackoverflow.com/users/5195787/benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:stackoverflow-icon" data-width="40" data-height="40"></span></div>
+            </a>
+            <a href="https://hub.docker.com/u/benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:docker-icon" data-width="40" data-height="40"></span></div>
+            </a>
+            <a href="https://www.nuget.org/profiles/benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="vscode-icons:file-type-nuget" data-width="40" data-height="40"></span></div>
+            </a>
+        </div>
+        <div class="d-flex flex-row flex-wrap">
+            <a href="https://www.linkedin.com/in/benhopkinstech/" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:linkedin-icon" data-width="40" data-height="40"></span></div>
+            </a>
+            <a href="https://www.youtube.com/@@benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:youtube-icon" data-width="40" data-height="40"></span></div>
+            </a>
+            <a href="https://www.instagram.com/benhopkinstech/" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="fa-brands:instagram-square" style="color: #bc2a8d;" data-width="40" data-height="40"></span></div>
+            </a>
+            <a href="https://twitter.com/benhopkinstech" target="_blank">
+                <div class="p-2"><span class="iconify" data-icon="logos:twitter" data-width="40" data-height="40"></span></div>
+            </a>
         </div>
     </div>
-}
-
-@code {
-    private IndexData? content;
-    private List<SocialIconData>? icons;
-
-    protected override async Task OnInitializedAsync()
-    {
-        content = await Http.GetFromJsonAsync<IndexData>("api/index");
-        icons = await Http.GetFromJsonAsync<List<SocialIconData>>("api/socialicon");
-    }
-}
+</div>
