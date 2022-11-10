@@ -23,6 +23,9 @@ jobs:
       - name: database.env Variable Substitution
         run: sed -i 's/P4ssW0rd!/${{ secrets.DatabasePassword }}/g' Server/database.env
 
+      - name: docker-compose.yml Change Database Path
+        run: sed -i 's/.\/dbdata:\/var\/opt\/mssql\/data/..\/..\/..\/dbdata:\/var\/opt\/mssql\/data/g' docker-compose.yml
+
       - name: End Previous Containers
         run: docker-compose down
 
