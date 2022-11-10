@@ -16,19 +16,19 @@ namespace hopkins.tech.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<BlogListData> GetBlogPosts()
+        public IEnumerable<object> GetBlogPosts()
         {
-            return _context.Blogs.Select(x => new BlogListData { Id = x.Id, Url = x.Url, Posted = x.Posted, Title = x.Title, Summary = x.Summary });
+            return _context.Blogs.Select(x => new { Id = x.Id, Url = x.Url, Posted = x.Posted, Title = x.Title, Summary = x.Summary });
         }
 
         [HttpGet, Route("{url}")]
-        public BlogPostData? GetBlogPostByUrl(string url)
+        public object? GetBlogPostByUrl(string url)
         {
             var blogPost = _context.Blogs.Where(b => b.Url == url).FirstOrDefault();
 
             if(blogPost != null)
             {
-                return new BlogPostData { Title = blogPost.Title, Posted = blogPost.Posted, Post = blogPost.Post };
+                return new { Title = blogPost.Title, Posted = blogPost.Posted, Post = blogPost.Post };
             }
 
             return null;

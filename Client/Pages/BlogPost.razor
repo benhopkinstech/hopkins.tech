@@ -24,13 +24,13 @@
 @code {
     [Parameter] public string? url { get; set; }
 
-    private BlogPostData? blogPost;
+    private BlogData? blogPost;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            blogPost = await Http.GetFromJsonAsync<BlogPostData>($"api/blog/{url}");
+            blogPost = await Http.GetFromJsonAsync<BlogData>($"api/blog/{url}");
         }
         catch
         {
