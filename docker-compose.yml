@@ -3,7 +3,7 @@ version: '3.4'
 services:
   hopkins.tech.server:
     image: hopkinstech
-    container_name: ${DOCKER_REGISTRY-}hopkinstech
+    container_name: hopkinstech
     build:
       context: .
       dockerfile: Server/Dockerfile
