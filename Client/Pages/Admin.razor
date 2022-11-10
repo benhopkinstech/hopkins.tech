@@ -1,0 +1,54 @@
+﻿@page "/admin"
+@inject HttpClient Http
+
+<PageTitle>Ben Hopkins - Admin</PageTitle>
+
+<div class="container-fluid content">
+    <h3>Post a Blog</h3>
+    <EditForm Model="blogPost" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="url">Url: </label>
+            <InputText Id="url" Class="form-control" @bind-Value="@blogPost.Url">
+            </InputText>
+            <ValidationMessage For="@(() => blogPost.Url)" />
+        </div>
+        <div class="form-group">
+            <label for="title">Title: </label>
+            <InputText Id="title" Class="form-control" @bind-Value="@blogPost.Title">
+            </InputText>
+            <ValidationMessage For="@(() => blogPost.Title)" />
+        </div>
+        <div class="form-group">
+            <label for="summary">Summary: </label>
+            <InputText Id="summary" Class="form-control" @bind-Value="@blogPost.Summary">
+            </InputText>
+            <ValidationMessage For="@(() => blogPost.Summary)" />
+        </div>
+        <div class="form-group">
+            <label for="posted">Posted: </label>
+            <InputDate Id="posted" Class="form-control" @bind-Value="@blogPost.Posted">
+            </InputDate>
+            <ValidationMessage For="@(() => blogPost.Posted)" />
+        </div>
+        <div class="form-group">
+            <label for="post">Post: </label>
+            <InputTextArea Id="post" Class="form-control" @bind-Value="@blogPost.Post">
+            </InputTextArea>
+            <ValidationMessage For="@(() => blogPost.Post)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+</div>
+
+@code
+{
+    private BlogData blogPost = new BlogData();
+
+    public async Task HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync<BlogData>("api/blog", blogPost);
+
+        blogPost = new BlogData();
+    }
+}

@@ -1,7 +1,5 @@
 using hopkins.tech.Server.Data;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +8,7 @@ builder.Services.AddDbContext<HopkinsTechContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 // Create db if it doesn't exist
@@ -46,7 +45,6 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 
 app.MapRazorPages();
 app.MapControllers();
