@@ -1,6 +1,6 @@
 ﻿namespace hopkins.tech.Shared
 {
-    public class SocialIcon
+    public class SocialIconData
     {
         public Guid Id { get; set; }
         public string? Link { get; set; }

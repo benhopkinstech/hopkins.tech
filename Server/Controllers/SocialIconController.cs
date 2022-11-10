@@ -16,9 +16,15 @@ namespace hopkins.tech.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SocialIcon> GetSocialIcons()
+        public IEnumerable<SocialIconData> GetSocialIcons()
         {
             return _context.SocialIcons;
+        }
+
+        [HttpPut]
+        public IActionResult PutSocialIcons()
+        {
+            return StatusCode(501);
         }
     }
 }

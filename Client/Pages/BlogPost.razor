@@ -4,19 +4,19 @@
 @inject NavigationManager Navigation
 
 <div class="container-fluid content">
-    @if (blog == null)
+    @if (blogPost == null)
     {
        <PageTitle>Ben Hopkins - Blog</PageTitle>
        <p><em>Loading...</em></p>
     }
     else
     {
-        <PageTitle>Ben Hopkins - @blog.Title</PageTitle>
-        <h1>@blog.Title</h1>
-        <div>@blog.Posted.ToLongDateString()</div>
+        <PageTitle>Ben Hopkins - @blogPost.Title</PageTitle>
+        <h1>@blogPost.Title</h1>
+        <div>@blogPost.Posted.ToLongDateString()</div>
         <hr />
         <div class="col-md-12 col-lg-10 col-xl-8">
-            @((MarkupString)(blog.Post ?? ""))
+            @((MarkupString)(blogPost.Post ?? ""))
         </div>
     }
 </div>
@@ -24,13 +24,13 @@
 @code {
     [Parameter] public string? url { get; set; }
 
-    private BlogData? blog;
+    private BlogPostData? blogPost;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            blog = await Http.GetFromJsonAsync<BlogData>($"api/blog/{url}");
+            blogPost = await Http.GetFromJsonAsync<BlogPostData>($"api/blog/{url}");
         }
         catch
         {

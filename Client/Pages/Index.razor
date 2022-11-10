@@ -38,11 +38,11 @@ else
 
 @code {
     private IndexData? content;
-    private List<SocialIcon>? icons;
+    private List<SocialIconData>? icons;
 
     protected override async Task OnInitializedAsync()
     {
         content = await Http.GetFromJsonAsync<IndexData>("api/index");
-        icons = await Http.GetFromJsonAsync<List<SocialIcon>>("api/socialicon");
+        icons = await Http.GetFromJsonAsync<List<SocialIconData>>("api/socialicon");
     }
 }

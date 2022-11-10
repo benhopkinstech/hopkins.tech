@@ -16,15 +16,36 @@ namespace hopkins.tech.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<BlogData> GetBlogPosts()
+        public IEnumerable<BlogListData> GetBlogPosts()
         {
-            return _context.Blogs;
+            return _context.Blogs.Select(x => new BlogListData { Id = x.Id, Url = x.Url, Posted = x.Posted, Title = x.Title, Summary = x.Summary });
         }
 
         [HttpGet, Route("{url}")]
-        public BlogData? GetBlogPostByUrl(string url)
+        public BlogPostData? GetBlogPostByUrl(string url)
         {
-            return _context.Blogs.Where(b => b.Url == url).FirstOrDefault();
+            var blogPost = _context.Blogs.Where(b => b.Url == url).FirstOrDefault();
+
+            if(blogPost != null)
+            {
+                return new BlogPostData { Title = blogPost.Title, Posted = blogPost.Posted, Post = blogPost.Post };
+            }
+
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult PostBlogData()
+        {
+            // Check url is unique
+
+            return StatusCode(501);
+        }
+
+        [HttpPut]
+        public IActionResult PutBlogData()
+        {
+            return StatusCode(501);
         }
     }
 }

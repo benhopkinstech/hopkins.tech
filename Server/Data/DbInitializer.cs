@@ -17,19 +17,19 @@ namespace hopkins.tech.Server.Data
             context.Index.Add(new IndexData { Id = new Guid(), Title = "Software Engineer", Tagline = "with a love for all things tech" });
             context.SaveChanges();
 
-            var socialIcons = new SocialIcon[]
+            var socialIcons = new SocialIconData[]
             {
-                new SocialIcon { Id = new Guid(), Link = "https://github.com/benhopkinstech", Icon = "logos:github-icon", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://stackoverflow.com/users/5195787/benhopkinstech", Icon = "logos:stackoverflow-icon", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://hub.docker.com/u/benhopkinstech", Icon = "logos:docker-icon", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://www.nuget.org/profiles/benhopkinstech", Icon = "vscode-icons:file-type-nuget", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://www.linkedin.com/in/benhopkinstech/", Icon = "logos:linkedin-icon", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://www.youtube.com/channel/UCBS4y-oMVnON1ERYyZVP-OQ", Icon = "logos:youtube-icon", Width = 40, Height = 40, Colour = "" },
-                new SocialIcon { Id = new Guid(), Link = "https://www.instagram.com/benhopkinstech/", Icon = "fa-brands:instagram-square", Width = 40, Height = 40, Colour = "#bc2a8d" },
-                new SocialIcon { Id = new Guid(), Link = "https://twitter.com/benhopkinstech", Icon = "logos:twitter", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://github.com/benhopkinstech", Icon = "logos:github-icon", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://stackoverflow.com/users/5195787/benhopkinstech", Icon = "logos:stackoverflow-icon", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://hub.docker.com/u/benhopkinstech", Icon = "logos:docker-icon", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://www.nuget.org/profiles/benhopkinstech", Icon = "vscode-icons:file-type-nuget", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://www.linkedin.com/in/benhopkinstech/", Icon = "logos:linkedin-icon", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://www.youtube.com/@benhopkinstech", Icon = "logos:youtube-icon", Width = 40, Height = 40, Colour = "" },
+                new SocialIconData { Id = new Guid(), Link = "https://www.instagram.com/benhopkinstech/", Icon = "fa-brands:instagram-square", Width = 40, Height = 40, Colour = "#bc2a8d" },
+                new SocialIconData { Id = new Guid(), Link = "https://twitter.com/benhopkinstech", Icon = "logos:twitter", Width = 40, Height = 40, Colour = "" },
             };
 
-            foreach (SocialIcon icon in socialIcons)
+            foreach (SocialIconData icon in socialIcons)
             {
                 context.SocialIcons.Add(icon);
             }
