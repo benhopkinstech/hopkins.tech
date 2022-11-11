@@ -1,5 +1,8 @@
 using hopkins.tech.Server.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,25 @@ builder.Services.AddDbContext<HopkinsTechContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        string? tokenSecret = builder.Configuration.GetSection("Jwt:TokenSecret").Value;
+
+        if (tokenSecret != null)
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(tokenSecret)),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+            };
+        }
+    });
 
 var app = builder.Build();
 
@@ -18,7 +40,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<HopkinsTechContext>();
-        DbInitializer.Initialize(context);
+        DbInitializer.Initialize(context, builder.Configuration);
     }
     catch (Exception ex)
     {
@@ -45,6 +67,9 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

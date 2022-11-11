@@ -1,5 +1,6 @@
 ﻿using hopkins.tech.Server.Data;
 using hopkins.tech.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace hopkins.tech.Server.Controllers
@@ -35,6 +36,7 @@ namespace hopkins.tech.Server.Controllers
             return null;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult PostBlogPost([FromBody] BlogData blogData)
         {

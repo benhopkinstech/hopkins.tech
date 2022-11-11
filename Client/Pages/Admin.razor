@@ -1,54 +1,94 @@
 ﻿@page "/admin"
 @inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
 
 <PageTitle>Ben Hopkins - Admin</PageTitle>
 
 <div class="container-fluid content">
-    <h3>Post a Blog</h3>
-    <EditForm Model="blogPost" OnValidSubmit="HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <div class="form-group">
-            <label for="url">Url: </label>
-            <InputText Id="url" Class="form-control" @bind-Value="@blogPost.Url">
-            </InputText>
-            <ValidationMessage For="@(() => blogPost.Url)" />
-        </div>
-        <div class="form-group">
-            <label for="title">Title: </label>
-            <InputText Id="title" Class="form-control" @bind-Value="@blogPost.Title">
-            </InputText>
-            <ValidationMessage For="@(() => blogPost.Title)" />
-        </div>
-        <div class="form-group">
-            <label for="summary">Summary: </label>
-            <InputText Id="summary" Class="form-control" @bind-Value="@blogPost.Summary">
-            </InputText>
-            <ValidationMessage For="@(() => blogPost.Summary)" />
-        </div>
-        <div class="form-group">
-            <label for="posted">Posted: </label>
-            <InputDate Id="posted" Class="form-control" @bind-Value="@blogPost.Posted">
-            </InputDate>
-            <ValidationMessage For="@(() => blogPost.Posted)" />
-        </div>
-        <div class="form-group">
-            <label for="post">Post: </label>
-            <InputTextArea Id="post" Class="form-control" @bind-Value="@blogPost.Post">
-            </InputTextArea>
-            <ValidationMessage For="@(() => blogPost.Post)" />
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </EditForm>
+    <AuthorizeView Context="auth">
+        <Authorized>
+            <h3>Post a Blog</h3>
+            <br />
+            <EditForm Model="blogPost" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="mb-2">
+                    <label for="url" class="form-label">Url:</label>
+                    <InputText Id="url" Class="form-control" @bind-Value="@blogPost.Url">
+                    </InputText>
+                    <ValidationMessage For="@(() => blogPost.Url)" />
+                </div>
+                <div class="mb-2">
+                    <label for="title" class="form-label">Title:</label>
+                    <InputText Id="title" Class="form-control" @bind-Value="@blogPost.Title">
+                    </InputText>
+                    <ValidationMessage For="@(() => blogPost.Title)" />
+                </div>
+                <div class="mb-2">
+                    <label for="summary" class="form-label">Summary:</label>
+                    <InputText Id="summary" Class="form-control" @bind-Value="@blogPost.Summary">
+                    </InputText>
+                    <ValidationMessage For="@(() => blogPost.Summary)" />
+                </div>
+                <div class="mb-2">
+                    <label for="posted" class="form-label">Posted:</label>
+                    <InputDate Id="posted" Class="form-control" @bind-Value="@blogPost.Posted">
+                    </InputDate>
+                    <ValidationMessage For="@(() => blogPost.Posted)" />
+                </div>
+                <div class="mb-2">
+                    <label for="post" class="form-label">Post:</label>
+                    <InputTextArea Id="post" Class="form-control" @bind-Value="@blogPost.Post">
+                    </InputTextArea>
+                    <ValidationMessage For="@(() => blogPost.Post)" />
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            <h3>Login</h3>
+            <br />
+            <div class="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3">
+                <EditForm Model="user" OnSubmit="HandleLogin">
+                    <div class="mb-2">
+                        <label for="username" class="form-label">Username</label>
+                        <InputText Id="username" Class="form-control" @bind-Value="user.Username" />
+                    </div>
+                    <div class="mb-2">
+                        <label for="password" class="form-label">Password</label>
+                        <InputText Id="password" Class="form-control" @bind-Value="user.Password" type="password" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </EditForm>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 
 @code
 {
-    private BlogData blogPost = new BlogData();
+    UserDto user = new UserDto();
+    BlogData blogPost = new BlogData();
 
-    public async Task HandleValidSubmit()
+    async Task HandleLogin()
+    {
+        var result = await Http.PostAsJsonAsync("api/auth", user);
+        var token = await result.Content.ReadAsStringAsync();
+
+        if (token != "Error")
+        {
+            await LocalStorage.SetItemAsync("token", token);
+            await AuthStateProvider.GetAuthenticationStateAsync();
+        }
+    }
+
+    async Task HandleValidSubmit()
     {
         await Http.PostAsJsonAsync<BlogData>("api/blog", blogPost);
 
         blogPost = new BlogData();
+
+        await LocalStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
     }
 }
