@@ -28,6 +28,12 @@ jobs:
 
       - name: docker-compose.yml Change Database Path
         run: sed -i 's/.\/dbdata:\/var\/opt\/mssql\/data/..\/..\/..\/..\/dbdata:\/var\/opt\/mssql\/data/g' docker-compose.yml
+      
+      - name: End Previous Containers
+        run: docker-compose down
+
+      - name: Remove Old Image
+        run: docker image rm hopkinstech
 
       - name: Start Containers
         run: docker-compose up -d
