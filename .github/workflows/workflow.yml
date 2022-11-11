@@ -35,5 +35,8 @@ jobs:
       - name: Remove Old Image
         run: docker image rm hopkinstech
 
+      - name: Remove Dangling Images
+        run: docker rmi $(docker images -f "dangling=true" -q)
+
       - name: Start Containers
         run: docker-compose up -d
