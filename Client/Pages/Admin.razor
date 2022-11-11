@@ -49,14 +49,19 @@
             <h3>Login</h3>
             <br />
             <div class="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3">
-                <EditForm Model="user" OnSubmit="HandleLogin">
+                <EditForm Model="user" OnValidSubmit="HandleValidLogin">
+                    <DataAnnotationsValidator />
                     <div class="mb-2">
                         <label for="username" class="form-label">Username</label>
-                        <InputText Id="username" Class="form-control" @bind-Value="user.Username" />
+                        <InputText Id="username" Class="form-control" @bind-Value="@user.Username">
+                        </InputText>
+                        <ValidationMessage For="@(() => user.Username)" />
                     </div>
                     <div class="mb-2">
                         <label for="password" class="form-label">Password</label>
-                        <InputText Id="password" Class="form-control" @bind-Value="user.Password" type="password" />
+                        <InputText Id="password" Class="form-control" Type="password" @bind-Value="@user.Password">
+                        </InputText>
+                        <ValidationMessage For="@(() => user.Password)" />
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </EditForm>
@@ -70,12 +75,14 @@
     UserDto user = new UserDto();
     BlogData blogPost = new BlogData();
 
-    async Task HandleLogin()
+    async Task HandleValidLogin()
     {
-        var result = await Http.PostAsJsonAsync("api/auth", user);
+        var result = await Http.PostAsJsonAsync<UserDto>("api/auth", user);
         var token = await result.Content.ReadAsStringAsync();
 
-        if (token != "Error")
+        user = new UserDto();
+
+        if (result.StatusCode == System.Net.HttpStatusCode.OK)
         {
             await LocalStorage.SetItemAsync("token", token);
             await AuthStateProvider.GetAuthenticationStateAsync();

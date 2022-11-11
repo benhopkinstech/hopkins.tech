@@ -29,14 +29,14 @@ namespace hopkins.tech.Server.Controllers
 
             if (user == null || !VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Error");
+                return BadRequest("Invalid login");
             }
 
             string token = CreateToken(user);
 
             if (token == "")
             {
-                return BadRequest("Error");
+                return BadRequest("Something went wrong");
             }
 
             return Ok(token);
