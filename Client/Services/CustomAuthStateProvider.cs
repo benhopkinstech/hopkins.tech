@@ -10,6 +10,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
 {
     private readonly ILocalStorageService _localStorage;
     private readonly HttpClient _http;
+    private static bool successfulLogin = false;
 
     public CustomAuthStateProvider(ILocalStorageService localStorage, HttpClient http)
     {
@@ -24,7 +25,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         var identity = new ClaimsIdentity();
         _http.DefaultRequestHeaders.Authorization = null;
 
-        if (!string.IsNullOrEmpty(token))
+        if (!string.IsNullOrEmpty(token) && successfulLogin)
         {
             identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
             _http.DefaultRequestHeaders.Authorization =
@@ -37,6 +38,11 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(Task.FromResult(state));
 
         return state;
+    }
+
+    public static void SetSuccessfulLogin(bool state)
+    {
+        successfulLogin = state;
     }
 
     public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)

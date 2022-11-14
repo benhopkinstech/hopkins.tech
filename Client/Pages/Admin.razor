@@ -85,6 +85,7 @@
         if (result.StatusCode == System.Net.HttpStatusCode.OK)
         {
             await LocalStorage.SetItemAsync("token", token);
+            Services.CustomAuthStateProvider.SetSuccessfulLogin(true);
             await AuthStateProvider.GetAuthenticationStateAsync();
         }
     }
@@ -96,6 +97,7 @@
         blogPost = new BlogData();
 
         await LocalStorage.RemoveItemAsync("token");
+        Services.CustomAuthStateProvider.SetSuccessfulLogin(false);
         await AuthStateProvider.GetAuthenticationStateAsync();
     }
 }
