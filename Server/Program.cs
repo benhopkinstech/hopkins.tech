@@ -1,8 +1,11 @@
 using hopkins.tech.Server.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +73,22 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter(new RateLimiterOptions
+{
+    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context => {
+
+        if (context.Request.Path == "/api/auth")
+        {
+            return RateLimitPartition.GetFixedWindowLimiter<string>("CustomLimit",
+                _ => new FixedWindowRateLimiterOptions { PermitLimit = 1, Window = TimeSpan.FromMinutes(1), AutoReplenishment = true });
+        }
+
+        return RateLimitPartition.GetConcurrencyLimiter<string>("GeneralLimit",
+            _ => new ConcurrencyLimiterOptions { PermitLimit = 2, QueueProcessingOrder = QueueProcessingOrder.OldestFirst, QueueLimit = 20 });
+    }),
+    RejectionStatusCode = 429
+});
 
 app.MapRazorPages();
 app.MapControllers();
